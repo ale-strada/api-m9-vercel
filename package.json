@@ -1,0 +1,18 @@
+{
+  "name": "api-vercel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ale-strada/api-m9-vercel.git",
+  "author": "ale-strada <79310707+ale-strada@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next"
+  },
+  "dependencies": {
+    "next": "^12.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
