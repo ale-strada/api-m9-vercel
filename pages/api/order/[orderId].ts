@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
-import { getProductById } from "lib/models/product";
+import { getOrderById } from "lib/models/order";
 
 export default methods({
   async get(req: NextApiRequest, res: NextApiResponse) {
-    const product = await getProductById(req.query.productId);
-    res.status(200).send({ res: product });
+    const order = await getOrderById(req.query.orderId);
+    res.status(200).send(order);
   },
 });

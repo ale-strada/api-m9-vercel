@@ -19,3 +19,17 @@ export class Order extends Model {
     return newOrder;
   }
 }
+
+export async function getOrdersByUserId(userId) {
+  const results = await collection.where("userId", "==", userId).get();
+  const res = results.docs.map((r) => {
+    return { id: r.id, status: r.get("status") };
+  });
+  return res;
+}
+
+export async function getOrderById(orderId) {
+  const order = new Order(orderId);
+  await order.pull();
+  return order.data;
+}

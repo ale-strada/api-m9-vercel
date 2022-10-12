@@ -4,7 +4,6 @@ import gen from "random-seed";
 import { findOrCreateAuth } from "../controllers/auth";
 import addMinutes from "date-fns/addMinutes";
 import isAfter from "date-fns/isAfter";
-import { emit } from "process";
 
 var seed = "palabra";
 var random = gen.create(seed);
