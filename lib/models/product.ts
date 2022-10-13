@@ -12,6 +12,7 @@ type ProductType = {
   objectID: string;
   userId?: string;
 };
+
 export class Product<ProductType> extends Model {
   ref: FirebaseFirestore.DocumentReference;
 

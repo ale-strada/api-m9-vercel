@@ -23,7 +23,7 @@ async function handlerPost(req: NextApiRequest, res: NextApiResponse, token) {
   const pref = await createPreference({
     external_reference: order.id,
     notification_url:
-      "https://dwf-m9-passwordless-pwdu.vercel.app/api/webhooks/mercadopago",
+      "https://api-m9-vercel-ige5.vercel.app/api/ipn/mercadopago",
     items: [
       {
         title: product.title,

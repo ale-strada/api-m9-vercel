@@ -10,8 +10,6 @@ export async function gerMerchantOrder(id) {
 }
 
 export async function createPreference(data = {}) {
-  console.log(mercadopago);
-
   const res = await mercadopago.preferences.create(data);
   return res.body;
 }
