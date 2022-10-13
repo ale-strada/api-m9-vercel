@@ -32,7 +32,14 @@ function sendEmailComprador(email) {
     };
     sendEmail(msg);
   } else {
-    console.error("no hay direccion de email");
+    const msg = {
+      to: "strada.ale92@gmail.com",
+      from: "buscador.de.mascotas.app@gmail.com",
+      subject: "informacion de compra",
+      text: "Su pago fue realizado con éxito USER SIN EMAIL",
+    };
+    sendEmail(msg);
+    console.log("no hay direccion de email");
   }
 }
 
