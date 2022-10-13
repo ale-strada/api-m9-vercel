@@ -15,8 +15,8 @@ export async function processOrder(topic, id) {
       myOrder.data.externalOrder = order;
       await myOrder.push();
 
-      sendEmailComprador(myOrder.data.externalOrder.payer.email);
       saveOrder(orderId, myOrder.data.productId);
+      sendEmailComprador(myOrder.data.externalOrder.payer.email);
     }
   }
 }
@@ -36,7 +36,7 @@ function sendEmailComprador(email) {
   }
 }
 
-export async function saveOrder(orderId, objectID) {
+async function saveOrder(orderId, objectID) {
   const product: any = await productsIndex.findObject(
     (hit) => hit.objectID == objectID
   );
