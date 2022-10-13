@@ -3,7 +3,7 @@ import { airtableBase } from "lib/airtable";
 import { productsIndex } from "lib/algolia";
 import { getOffsetAndLimitFromReq } from "lib/requests";
 
-//aca se sincroniza airtablo con algolia, este endpoint es invocado cada 15 minutos por cronos
+//aca se sincroniza airtable con algolia, este endpoint es invocado cada 15 minutos por cron-job
 export default function (req: NextApiRequest, res: NextApiResponse) {
   const { offset, limit } = getOffsetAndLimitFromReq(req, 10, 10000);
   airtableBase("Furniture")

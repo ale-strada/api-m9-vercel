@@ -29,7 +29,7 @@ async function handlerPost(req: NextApiRequest, res: NextApiResponse, token) {
         title: product.title,
         description: product.description,
         picture_url: product.pictureURL,
-        category_id: "car_electronics",
+        category_id: product.types,
         quantity: 1,
         currency_id: "ARS",
         unit_price: product.price,

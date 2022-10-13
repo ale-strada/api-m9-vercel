@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { sendCode } from "lib/models/auth";
-import { sendEmailCode } from "lib/sendgrid";
+import { sendEmail } from "lib/sendgrid";
 import methods from "micro-method-router";
 
 export default methods({
@@ -14,7 +14,7 @@ export default methods({
         "Tu codigo de seguridad para iniciar sesion es: " +
         authcode.data.code.toString(),
     };
-    sendEmailCode(msg);
+    sendEmail(msg);
     res.send(authcode.data);
   },
 });

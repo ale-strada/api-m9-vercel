@@ -11,6 +11,7 @@ type ProductType = {
   materials: [];
   objectID: string;
   userId?: string;
+  types?: string;
 };
 
 export class Product<ProductType> extends Model {
@@ -40,6 +41,7 @@ export async function getProductByIdToMerchantOrder(productId) {
     inStock: product.object["In stock"],
     materials: product.Materials,
     objectID: product.objectID,
+    types: product.object.Type,
   };
 
   return productToOrder;
