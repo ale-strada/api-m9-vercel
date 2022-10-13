@@ -13,9 +13,13 @@ export async function processOrder(topic, id) {
       myOrder.data.status = "closed";
       myOrder.data.externalOrder = order;
       await myOrder.push();
-      console.log(myOrder.data);
+      console.log({
+        email: myOrder.data.externalOrder.payer.email,
+        objectID: myOrder.data.productId,
+      });
 
-      //sendEmailComprador(myOrder.data.payer.email);
+      //   sendEmailComprador(myOrder.data.externalOrder.payer.email);
+      //   saveOrder(orderId, myOrder.data.productId);
       //send email (compra exitosa, procesando envio)
       //email interno (alguien compro algo)
     }
