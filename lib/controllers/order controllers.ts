@@ -1,6 +1,7 @@
 import { productsIndex } from "lib/algolia";
 import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
+import { Product } from "lib/models/product";
 import { sendEmail } from "lib/sendgrid";
 
 export async function processOrder(topic, id) {
@@ -35,11 +36,17 @@ function sendEmailComprador(email) {
   }
 }
 
-async function saveOrder(orderId, objectID) {
+export async function saveOrder(orderId, objectID) {
+  const product: any = await productsIndex.findObject(
+    (hit) => hit.objectID == objectID
+  );
+  product.object.Orders.push(orderId);
   await productsIndex.partialUpdateObject({
-    Orders: [...orderId],
+    Orders: product.object.Orders,
     objectID: objectID,
   });
+
+  console.log(product.object.Orders);
 }
 
 // {
