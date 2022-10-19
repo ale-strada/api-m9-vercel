@@ -14,7 +14,7 @@ export function sendEmail(mail, content, subject) {
 
   mg.messages
     .create(DOMAIN, {
-      from: "Mailgun Sandbox <postmaster@sandbox4f36637cf93a424ea029aec49bb5a93b.mailgun.org>",
+      from: "strada.ale92@gmail.com",
       to: ["strada.ale92@gmail.com", mail],
       subject: subject,
       text: content,

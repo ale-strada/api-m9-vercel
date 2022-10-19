@@ -2,6 +2,7 @@ import { productsIndex } from "lib/algolia";
 import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
 import { sendEmail } from "lib/mailgun";
+import { airtableBase } from "lib/airtable";
 
 export async function processOrder(topic, id) {
   if (topic == "merchant_order") {
@@ -48,9 +49,26 @@ export async function saveOrder(orderId, objectID) {
     console.log(product.object.Orders);
     product.object.Orders.map((o) => orders.push(o));
   }
-  await productsIndex.partialUpdateObject({
-    New_Order: orderId,
-    objectID: objectID,
-    Orders: orders,
-  });
+  // await productsIndex.partialUpdateObject({
+  //   New_Order: orderId,
+  //   objectID: objectID,
+  //   Orders: orders,
+  // });
+
+  airtableBase("Furniture").update(
+    [
+      {
+        id: objectID,
+        fields: {
+          Orders: orders,
+        },
+      },
+    ],
+    function (err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    }
+  );
 }

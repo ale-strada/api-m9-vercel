@@ -31,3 +31,20 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
       }
     );
 }
+
+airtableBase("Furniture").update(
+  [
+    {
+      id: "recSUKveCQO1SdC7N",
+      fields: {
+        Orders: ["recQZKoiNRM5N9vTC"],
+      },
+    },
+  ],
+  function (err, records) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  }
+);
