@@ -32,7 +32,7 @@ export function sendEmailComprador(email) {
     sendEmail(msg);
   } else {
     const msg = {
-      to: "strada_ale@hotmail.com",
+      to: "strada.ale92@gmail.com",
       from: "buscador.de.mascotas.app@gmail.com",
       subject: "informacion de compra",
       text: "Su pago fue realizado con éxito USER SIN EMAIL",
