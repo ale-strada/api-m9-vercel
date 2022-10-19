@@ -10,6 +10,8 @@ const mg = mailgun.client({
   key: API_KEY,
 });
 export function sendEmail(mail, content, subject) {
+  console.log("envia mail");
+
   mg.messages
     .create(DOMAIN, {
       from: "Mailgun Sandbox <postmaster@sandbox4f36637cf93a424ea029aec49bb5a93b.mailgun.org>",
