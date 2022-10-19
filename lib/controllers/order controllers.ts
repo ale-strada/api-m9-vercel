@@ -1,7 +1,7 @@
 import { productsIndex } from "lib/algolia";
 import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
-import { sendEmail } from "lib/sendgrid";
+import { sendEmail } from "lib/mailgun";
 
 export async function processOrder(topic, id) {
   if (topic == "merchant_order") {
@@ -23,21 +23,16 @@ export async function processOrder(topic, id) {
 export function sendEmailComprador(email) {
   const cleanEmail = email.trim().toLocaleLowerCase();
   if (cleanEmail) {
-    const msg = {
-      to: cleanEmail,
-      from: "buscador.de.mascotas.app@gmail.com",
-      subject: "informacion de compra",
-      text: "Su pago fue realizado con éxito",
-    };
-    sendEmail(msg);
+    const subject = "informacion de compra";
+    const content = "Su pago fue realizado con éxito";
+
+    sendEmail(cleanEmail, content, subject);
   } else {
-    const msg = {
-      to: "strada.ale92@gmail.com",
-      from: "buscador.de.mascotas.app@gmail.com",
-      subject: "informacion de compra",
-      text: "Su pago fue realizado con éxito USER SIN EMAIL",
-    };
-    sendEmail(msg);
+    const mail = "strada.ale92@gmail.com";
+    const subject = "informacion de compra";
+    const content = "Su pago fue realizado con éxito USER SIN EMAIL";
+
+    sendEmail(mail, content, subject);
     console.log("no hay direccion de email");
   }
 }

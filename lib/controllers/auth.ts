@@ -16,6 +16,7 @@ export async function findOrCreateAuth(email: string): Promise<Auth> {
       code: "",
       expires: new Date(),
     });
+
     await newAuth.push();
     return newAuth;
   }
