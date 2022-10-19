@@ -1,6 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getMerchantOrder } from "lib/mercadopago";
-import { Order } from "lib/models/order";
 import methods from "micro-method-router";
 import { processOrder } from "lib/controllers/order controllers";
 
