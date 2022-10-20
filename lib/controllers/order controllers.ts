@@ -42,25 +42,13 @@ export async function saveOrder(orderId, objectID) {
   const product: any = await productsIndex.findObject(
     (hit) => hit.objectID == objectID
   );
-  const orders = [];
-  orders.push(orderId);
 
-  if (product.object.Orders) {
-    console.log(product.object.Orders);
-    product.object.Orders.map((o) => orders.push(o));
-  }
-  // await productsIndex.partialUpdateObject({
-  //   New_Order: orderId,
-  //   objectID: objectID,
-  //   Orders: orders,
-  // });
-
-  airtableBase("Furniture").update(
+  airtableBase("Order line items").create(
     [
       {
-        id: objectID,
         fields: {
-          Orders: orders,
+          "Furniture item": [objectID],
+          "order MP Id": orderId,
         },
       },
     ],
@@ -69,6 +57,9 @@ export async function saveOrder(orderId, objectID) {
         console.error(err);
         return;
       }
+      records.forEach(function (record) {
+        console.log(record.getId());
+      });
     }
   );
 }
