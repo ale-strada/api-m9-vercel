@@ -4,12 +4,12 @@ import { Order } from "lib/models/order";
 import { sendEmail } from "lib/mailgun";
 import { airtableBase } from "lib/airtable";
 
+// toma la informacion que devuelve MP la guarda en algolia e invoca funciones de otificacion a comprador y vendedor
 export async function processOrder(topic, id) {
   console.log({ INFOMP: { topic, id } });
 
   if (topic == "merchant_order") {
     const order = await getMerchantOrder(id);
-    console.log({ order: order });
 
     if (order.order_status == "paid") {
       const orderId = order.external_reference;
@@ -18,15 +18,13 @@ export async function processOrder(topic, id) {
       myOrder.data.status = "closed";
       myOrder.data.externalOrder = order;
       await myOrder.push();
-      console.log({ myOrderPID: myOrder.data.productId });
-      console.log({ mailComp: myOrder.data.externalOrder.payer.email });
 
       saveOrder(orderId, myOrder.data.productId);
       sendEmailComprador(myOrder.data.externalOrder.payer.email);
     }
   }
 }
-
+//notifica al comprador sobre su pago exitoso
 export function sendEmailComprador(email) {
   const cleanEmail = email.trim().toLocaleLowerCase();
   if (cleanEmail) {
@@ -38,15 +36,12 @@ export function sendEmailComprador(email) {
     const mail = "strada.ale92@gmail.com";
     const subject = "informacion de compra";
     const content = "Su pago fue realizado con éxito USER SIN EMAIL";
-
     sendEmail(mail, content, subject);
     console.log("no hay direccion de email");
   }
 }
-
+// utiliza el id de una order y el id de un producto para guardar esta order en la tabla de Airtable
 export async function saveOrder(orderId, objectID) {
-  console.log(orderId, objectID);
-
   const product: any = await productsIndex.findObject(
     (hit) => hit.objectID == objectID
   );
