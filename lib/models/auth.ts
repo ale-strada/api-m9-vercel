@@ -5,8 +5,11 @@ import { findOrCreateAuth } from "../controllers/auth";
 import addMinutes from "date-fns/addMinutes";
 import isAfter from "date-fns/isAfter";
 
-var seed = "palabra";
-var random = gen.create(seed);
+// con esta secuencia el codigo es siempre igual
+// var seed = "palabra";
+//var random = gen.create(seed);
+
+var random = gen.create();
 
 const collection = firestore.collection("auth");
 

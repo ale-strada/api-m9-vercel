@@ -4,7 +4,7 @@ import { Order } from "lib/models/order";
 import { sendEmail } from "lib/mailgun";
 import { airtableBase } from "lib/airtable";
 
-// toma la informacion que devuelve MP la guarda en algolia e invoca funciones de otificacion a comprador y vendedor
+// toma la informacion que devuelve MP la guarda en algolia e invoca funciones de notificacion a comprador y vendedor
 export async function processOrder(topic, id) {
   console.log({ INFOMP: { topic, id } });
 
