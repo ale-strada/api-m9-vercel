@@ -1,31 +1,24 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { sendCode } from "lib/models/auth";
-import { sendEmail } from "lib/sendgrid";
-//import { sendEmail } from "lib/mailgun";
 import methods from "micro-method-router";
+import * as yup from "yup";
+
+let bodySchema = yup
+  .object()
+  .shape({
+    email: yup.string().required(),
+  })
+  .noUnknown()
+  .strict();
 
 export default methods({
   async post(req: NextApiRequest, res: NextApiResponse) {
+    try {
+      await bodySchema.validate(req.body);
+    } catch (error) {
+      res.status(400).send({ field: "body", message: error });
+    }
     const authcode = await sendCode(req.body.email);
-    // para enviar el email con mailgun
-    // const email = authcode.data.email;
-    // const subject = "Codigo para ingresar";
-    // const content =
-    //   "Tu codigo de seguridad para iniciar sesion es: " +
-    //   authcode.data.code.toString();
-
-    // sendEmail(email, content, subject);
-
-    // para enviar el email con sendgrid
-    const msg = {
-      to: authcode.data.email,
-      from: "strada.ale92@gmail.com",
-      subject: "Codigo para ingresar",
-      text:
-        "Tu codigo de seguridad para iniciar sesion es: " +
-        authcode.data.code.toString(),
-    };
-    sendEmail(msg);
 
     res.send(authcode.data);
   },

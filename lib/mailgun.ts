@@ -22,3 +22,12 @@ export function sendEmail(mail, content, subject) {
     .then((msg) => console.log(msg))
     .catch((err) => console.log(err));
 }
+
+// ejemplo para enviar el email con mailgun
+// const email = authcode.data.email;
+// const subject = "Codigo para ingresar";
+// const content =
+//   "Tu codigo de seguridad para iniciar sesion es: " +
+//   authcode.data.code.toString();
+
+// sendEmail(email, content, subject);

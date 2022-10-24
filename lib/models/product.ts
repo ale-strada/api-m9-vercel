@@ -39,8 +39,8 @@ export async function getProductByIdToMerchantOrder(productId) {
     price: product.object["Unit cost"],
     pictureURL: product.object.Images[0].url,
     inStock: product.object["In stock"],
-    materials: product.Materials,
-    objectID: product.objectID,
+    materials: product.object.Materials,
+    objectID: product.object.objectID,
     types: product.object.Type,
   };
 

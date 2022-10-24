@@ -1,45 +1,40 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
 import { authMiddleware } from "lib/middlewares";
-import { Order } from "lib/models/order";
-import { createPreference } from "lib/mercadopago";
-import { getProductByIdToMerchantOrder } from "lib/models/product";
+import { CreateOrderRes } from "lib/controllers/order controllers";
+import * as yup from "yup";
+
+let querySchema = yup.object().shape({
+  productId: yup.string().required(),
+});
+
+let bodySchema = yup
+  .object()
+  .shape({
+    address: yup.string(),
+    color: yup.string(),
+  })
+  .noUnknown()
+  .strict();
 
 async function handlerPost(req: NextApiRequest, res: NextApiResponse, token) {
-  const { productId } = req.query as any;
-  const product: any = await getProductByIdToMerchantOrder(productId);
-
-  if (!product) {
-    res.status(404).send({ message: "el producto no existe" });
+  try {
+    await querySchema.validate(req.query);
+  } catch (error) {
+    res.status(400).send({ field: "query", message: error });
   }
-
-  const order = await Order.createNewOrder({
-    aditionalInfo: req.body,
-    productId,
-    userId: token.userId,
-    status: "pending",
-  });
-
-  const pref = await createPreference({
-    external_reference: order.id,
-    notification_url:
-      "https://api-m9-vercel-ige5.vercel.app/api/ipn/mercadopago",
-    items: [
-      {
-        title: product.title,
-        description: product.description,
-        picture_url: product.pictureURL,
-        category_id: product.types,
-        quantity: 1,
-        currency_id: "ARS",
-        unit_price: product.price,
-      },
-    ],
-    back_urls: {
-      success: "https://apx.school",
-    },
-  });
-  res.send({ url: pref.init_point });
+  try {
+    await bodySchema.validate(req.body);
+  } catch (error) {
+    res.status(400).send({ field: "body", message: error });
+  }
+  const { productId } = req.query;
+  try {
+    const pref = await CreateOrderRes(productId, token.userId, req.body);
+    res.send(pref);
+  } catch (error) {
+    res.status(400).send({ message: error });
+  }
 }
 
 const handler = methods({

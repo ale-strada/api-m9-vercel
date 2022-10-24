@@ -4,6 +4,7 @@ import gen from "random-seed";
 import { findOrCreateAuth } from "../controllers/auth";
 import addMinutes from "date-fns/addMinutes";
 import isAfter from "date-fns/isAfter";
+import { sendEmail } from "lib/sendgrid";
 
 // con esta secuencia el codigo es siempre igual
 // var seed = "palabra";
@@ -69,5 +70,15 @@ export async function sendCode(email: string) {
   auth.data.code = code;
   auth.data.expires = twentyMinutesFromNow;
   await auth.push();
+
+  const msg = {
+    to: auth.data.email,
+    from: "strada.ale92@gmail.com",
+    subject: "Codigo para ingresar",
+    text:
+      "Tu codigo de seguridad para iniciar sesion es: " +
+      auth.data.code.toString(),
+  };
+  sendEmail(msg);
   return auth;
 }
