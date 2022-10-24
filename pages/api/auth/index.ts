@@ -19,7 +19,7 @@ export default methods({
     // para enviar el email con sendgrid
     const msg = {
       to: authcode.data.email,
-      from: "strada.ale92@gmail.com", // Use the email address or domain you verified above
+      from: "strada.ale92@gmail.com",
       subject: "Codigo para ingresar",
       text:
         "Tu codigo de seguridad para iniciar sesion es: " +

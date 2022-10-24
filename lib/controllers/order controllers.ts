@@ -1,7 +1,7 @@
 import { productsIndex } from "lib/algolia";
 import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
-import { sendEmail } from "lib/mailgun";
+import { sendEmail } from "lib/sendgrid";
 import { airtableBase } from "lib/airtable";
 
 // toma la informacion que devuelve MP la guarda en algolia e invoca funciones de notificacion a comprador y vendedor
@@ -28,15 +28,27 @@ export async function processOrder(topic, id) {
 export function sendEmailComprador(email) {
   const cleanEmail = email.trim().toLocaleLowerCase();
   if (cleanEmail) {
-    const subject = "informacion de compra";
-    const content = "Su pago fue realizado con éxito";
+    // const subject = "informacion de compra";
+    // const content = "Su pago fue realizado con éxito";
+    // sendEmail(cleanEmail, content, subject);
 
-    sendEmail(cleanEmail, content, subject);
+    const msg = {
+      to: cleanEmail,
+      from: "strada.ale92@gmail.com",
+      subject: "informacion de compra",
+      text: "Su pago fue realizado con éxito",
+    };
+
+    sendEmail(msg);
   } else {
-    const mail = "strada.ale92@gmail.com";
-    const subject = "informacion de compra";
-    const content = "Su pago fue realizado con éxito USER SIN EMAIL";
-    sendEmail(mail, content, subject);
+    const msg = {
+      to: "strada.ale92@gmail.com",
+      from: "strada.ale92@gmail.com",
+      subject: "informacion de compra",
+      text: "Su pago fue realizado con éxito",
+    };
+
+    sendEmail(msg);
     console.log("no hay direccion de email");
   }
 }
