@@ -3,8 +3,8 @@ import sgMail from "@sendgrid/mail";
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 export async function sendEmail(msg) {
   try {
-    await sgMail.send(msg);
-    console.log("envia email");
+    const mail = await sgMail.send(msg);
+    console.log("envia email", mail);
   } catch (error) {
     console.error(error);
 
