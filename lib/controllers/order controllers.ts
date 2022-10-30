@@ -21,12 +21,12 @@ export async function processOrder(topic, id) {
       await myOrder.push();
 
       saveOrder(orderId, myOrder.data.productId);
-      sendEmailComprador(myOrder.data.externalOrder.payer.email);
+      await sendEmailComprador(myOrder.data.externalOrder.payer.email);
     }
   }
 }
 //notifica al comprador sobre su pago exitoso
-export function sendEmailComprador(email) {
+export async function sendEmailComprador(email) {
   const cleanEmail = email.trim().toLocaleLowerCase();
   if (cleanEmail) {
     // const subject = "informacion de compra";
@@ -40,7 +40,7 @@ export function sendEmailComprador(email) {
       text: "Su pago fue realizado con éxito",
     };
 
-    sendEmail(msg);
+    await sendEmail(msg);
   } else {
     const msg = {
       to: "strada.ale92@gmail.com",
