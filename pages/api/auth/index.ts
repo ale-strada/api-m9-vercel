@@ -15,11 +15,10 @@ export default methods({
   async post(req: NextApiRequest, res: NextApiResponse) {
     try {
       await bodySchema.validate(req.body);
+      const authcode = await sendCode(req.body.email);
+      res.send(authcode.data);
     } catch (error) {
       res.status(400).send({ field: "body", message: error });
     }
-    const authcode = await sendCode(req.body.email);
-
-    res.send(authcode.data);
   },
 });
