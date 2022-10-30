@@ -71,14 +71,14 @@ export async function sendCode(email: string) {
   auth.data.expires = twentyMinutesFromNow;
   await auth.push();
 
-  const msg = {
-    to: auth.data.email,
-    from: "strada.ale92@gmail.com",
-    subject: "Codigo para ingresar",
-    text:
-      "Tu codigo de seguridad para iniciar sesion es: " +
-      auth.data.code.toString(),
-  };
-  sendEmail(msg);
+  // const msg = {
+  //   to: auth.data.email,
+  //   from: "strada.ale92@gmail.com",
+  //   subject: "Codigo para ingresar",
+  //   text:
+  //     "Tu codigo de seguridad para iniciar sesion es: " +
+  //     auth.data.code.toString(),
+  // };
+  // sendEmail(msg);
   return auth;
 }
