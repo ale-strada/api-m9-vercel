@@ -72,14 +72,14 @@ export async function sendCode(email: string) {
   await auth.push();
   console.log(process.env.SENDGRID_API_KEY);
 
-  // const msg = {
-  //   to: auth.data.email,
-  //   from: "strada.ale92@gmail.com",
-  //   subject: "Codigo para ingresar",
-  //   text:
-  //     "Tu codigo de seguridad para iniciar sesion es: " +
-  //     auth.data.code.toString(),
-  // };
-  // sendEmail(msg);
+  const msg = {
+    to: auth.data.email,
+    from: "strada.ale92@gmail.com",
+    subject: "Codigo para ingresar",
+    text:
+      "Tu codigo de seguridad para iniciar sesion es: " +
+      auth.data.code.toString(),
+  };
+  await sendEmail(msg);
   return auth;
 }
