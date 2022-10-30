@@ -70,6 +70,7 @@ export async function sendCode(email: string) {
   auth.data.code = code;
   auth.data.expires = twentyMinutesFromNow;
   await auth.push();
+  console.log(process.env.SENDGRID_API_KEY);
 
   // const msg = {
   //   to: auth.data.email,

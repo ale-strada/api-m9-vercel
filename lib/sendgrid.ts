@@ -4,7 +4,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 export async function sendEmail(msg) {
   try {
     const mail = await sgMail.send(msg);
-    console.log("envia email", mail);
+    console.log("envia email");
   } catch (error) {
     console.error(error);
 
