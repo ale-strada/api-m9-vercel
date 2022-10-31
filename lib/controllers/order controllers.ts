@@ -49,7 +49,7 @@ export async function sendEmailComprador(email) {
       text: "Su pago fue realizado con éxito",
     };
 
-    sendEmail(msg);
+    await sendEmail(msg);
     console.log("no hay direccion de email");
   }
 }
