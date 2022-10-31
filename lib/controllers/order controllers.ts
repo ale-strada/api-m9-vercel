@@ -4,6 +4,7 @@ import { Order } from "lib/models/order";
 import { sendEmail } from "lib/sendgrid";
 import { airtableBase } from "lib/airtable";
 import { getProductByIdToMerchantOrder } from "lib/models/product";
+import { getEmailbyId } from "./userController";
 
 // toma la informacion que devuelve MP la guarda en algolia e invoca funciones de notificacion a comprador y vendedor
 export async function processOrder(topic, id) {
@@ -21,7 +22,7 @@ export async function processOrder(topic, id) {
       await myOrder.push();
 
       await saveOrder(orderId, myOrder.data.productId);
-      await sendEmailComprador(myOrder.data.externalOrder.payer.email);
+      await sendEmailComprador(myOrder.data.email);
     }
   }
 }
@@ -85,12 +86,15 @@ export async function CreateOrderRes(productId, userId, aditionalInfo) {
   if (!product) {
     throw "el producto no existe";
   }
+  //busca email con el id
+  const email = await getEmailbyId(userId);
 
   const order = await Order.createNewOrder({
     aditionalInfo,
     productId: product.objectID,
     userId: userId,
     status: "pending",
+    email: email,
   });
 
   const pref = await createPreference({

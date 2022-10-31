@@ -1,5 +1,4 @@
 import { User } from "lib/models/user";
-import { Auth } from "lib/models/auth";
 
 export async function userUpdate(email, updateData?) {
   const user = await User.findByEmail(email);
@@ -13,4 +12,9 @@ export async function userAddressUpdate(email, address) {
   user.data.address = address;
   await user.push();
   return user.data;
+}
+export async function getEmailbyId(userId) {
+  const user = await new User(userId);
+  await user.pull();
+  return user.data.email;
 }
