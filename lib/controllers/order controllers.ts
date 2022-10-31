@@ -20,7 +20,7 @@ export async function processOrder(topic, id) {
       myOrder.data.externalOrder = order;
       await myOrder.push();
 
-      saveOrder(orderId, myOrder.data.productId);
+      await saveOrder(orderId, myOrder.data.productId);
       await sendEmailComprador(myOrder.data.externalOrder.payer.email);
     }
   }
