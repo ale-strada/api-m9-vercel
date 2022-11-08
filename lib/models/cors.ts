@@ -1,11 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
+import { resolve } from "path";
+import { rejects } from "assert";
 
-// Initializing the cors middleware
-// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
 });
+
+// export default function corsMiddleware(req, res,cb){
+//     return new Promise((resolve,reject)=>{
+//         cors (req, res (result)=>{
+//             if(result instanceof Error) return reject(result);
+//             cb(req,res);
+//             return resolve(result)
+//         })
+//     })
+// }
 
 // Helper method to wait for a middleware to execute before continuing
 // And to throw an error when an error happens in a middleware
