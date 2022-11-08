@@ -1,16 +1,9 @@
 // pages/api/_middleware.ts
-import { NextResponse } from "next/server";
-// import type { NextRequest } from 'next/server'
-
-// export function middleware(request: NextRequest) {
-//   return NextResponse.rewrite(new URL('/about-2', request.url))
-// }
-
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   if (req.method == "OPTIONS") {
-    return NextResponse.rewrite("", {
+    return new Response("", {
       status: 204,
       headers: {
         "Access-Control-Allow-Credentials": "true",
