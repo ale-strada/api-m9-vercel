@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
-import { authMiddleware } from "lib/middlewares";
+import { authMiddleware, handlerCORS } from "lib/middlewares";
 import { CreateOrderRes } from "lib/controllers/order controllers";
 import * as yup from "yup";
 
@@ -41,4 +41,6 @@ const handler = methods({
   post: handlerPost,
 });
 
-export default authMiddleware(handler);
+const authMiddlewarePass = authMiddleware(handler);
+
+export default handlerCORS(authMiddlewarePass);

@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getOffsetAndLimitFromReq } from "lib/requests";
 import { productsIndex } from "lib/algolia";
 import * as yup from "yup";
+import { handlerCORS } from "lib/middlewares";
+import methods from "micro-method-router";
 
 let querySchema = yup
   .object()
@@ -14,7 +16,7 @@ let querySchema = yup
   .strict();
 
 //esta funcion devuelve un objeto con los resultados de busqueda en algolia
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+async function handlerSearch(req: NextApiRequest, res: NextApiResponse) {
   try {
     await querySchema.validate(req.query);
   } catch (error) {
@@ -37,3 +39,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     },
   });
 }
+
+const handler = methods({
+  get: handlerSearch,
+});
+
+export default handlerCORS(handler);

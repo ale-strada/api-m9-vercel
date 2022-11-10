@@ -3,6 +3,7 @@ import methods from "micro-method-router";
 import { authMiddleware } from "lib/middlewares";
 import { userAddressUpdate } from "lib/controllers/userController";
 import * as yup from "yup";
+import { handlerCORS } from "lib/middlewares";
 
 let bodySchema = yup
   .object()
@@ -27,4 +28,6 @@ const handler = methods({
   patch: patchAddress,
 });
 
-export default authMiddleware(handler);
+const authMiddlewarePass = authMiddleware(handler);
+
+export default handlerCORS(authMiddlewarePass);
