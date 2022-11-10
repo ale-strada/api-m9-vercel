@@ -4,6 +4,7 @@ import { User } from "lib/models/user";
 import { authMiddleware } from "lib/middlewares";
 import { userUpdate } from "lib/controllers/userController";
 import * as yup from "yup";
+import { handlerCORS } from "lib/middlewares";
 
 let bodySchema = yup
   .object()
@@ -35,5 +36,6 @@ const handler = methods({
   get: handlerMe,
   patch: handlerPatch,
 });
+const authMiddlewarePass = authMiddleware(handler);
 
-export default authMiddleware(handler);
+export default handlerCORS(authMiddlewarePass);
