@@ -34,7 +34,7 @@ async function handlerToken(req: NextApiRequest, res: NextApiResponse) {
   } else {
     var token = generate({ userId: auth.userId });
     Auth.invalidateCode(email);
-    res.send(token);
+    res.send(JSON.stringify(token));
   }
 }
 
