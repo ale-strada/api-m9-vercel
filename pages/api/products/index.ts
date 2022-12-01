@@ -1,9 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
 import { handlerCORS } from "lib/middlewares";
+import { getAllProducts } from "lib/models/product";
 
 async function handlerProduct(req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).send({ m: "PRODUCTOS" });
+  const product = await getAllProducts();
+  res.status(200).send({ res: product });
 }
 
 const handler = methods({

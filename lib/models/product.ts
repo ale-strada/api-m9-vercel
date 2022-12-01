@@ -53,3 +53,8 @@ export async function getProductById(productId) {
   );
   return product.object;
 }
+
+export async function getAllProducts() {
+  const products = await productsIndex.search("");
+  return products;
+}
