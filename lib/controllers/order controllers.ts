@@ -113,7 +113,7 @@ export async function CreateOrderRes(productId, userId, aditionalInfo) {
       },
     ],
     back_urls: {
-      success: "https://apx.school",
+      success: aditionalInfo.successUrl,
     },
   });
 

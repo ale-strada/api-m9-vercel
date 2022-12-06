@@ -13,6 +13,7 @@ let bodySchema = yup
   .shape({
     address: yup.string(),
     color: yup.string(),
+    successUrl: yup.string().required(),
   })
   .noUnknown()
   .strict();
