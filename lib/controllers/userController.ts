@@ -3,14 +3,13 @@ import { User } from "lib/models/user";
 export async function userUpdate(userId, updateData?) {
   const email = await getEmailbyId(userId);
   const user = await User.findByEmail(email);
-  console.log(userId, email, "data");
-
   user.data = updateData;
   await user.push();
   return user.data;
 }
 
-export async function userAddressUpdate(email, address) {
+export async function userAddressUpdate(userId, address) {
+  const email = await getEmailbyId(userId);
   const user = await User.findByEmail(email);
   user.data.address = address;
   await user.push();
