@@ -1,7 +1,10 @@
 import { User } from "lib/models/user";
 
-export async function userUpdate(email, updateData?) {
+export async function userUpdate(userId, updateData?) {
+  const email = await getEmailbyId(userId);
   const user = await User.findByEmail(email);
+  console.log(userId, email, "data");
+
   user.data = updateData;
   await user.push();
   return user.data;

@@ -2,7 +2,6 @@ import parseToken from "parse-bearer-token";
 import { NextApiRequest, NextApiResponse } from "next";
 import { decode } from "lib/jwt";
 import NextCors from "nextjs-cors";
-import { callbackify } from "util";
 
 export function authMiddleware(callback) {
   return function (req: NextApiRequest, res: NextApiResponse) {

@@ -9,26 +9,27 @@ import { handlerCORS } from "lib/middlewares";
 let bodySchema = yup
   .object()
   .shape({
-    email: yup.string().required(),
-    updateData: yup.object().required(),
+    name: yup.string(),
+    email: yup.string(),
+    address: yup.string(),
   })
   .noUnknown()
-  .strict();
+  .strict(true);
 
 async function handlerMe(req: NextApiRequest, res: NextApiResponse, token) {
   const user = new User(token.userId);
   await user.pull();
-  res.status(200).send({ updated: user.data });
+  res.status(200).send(user.data);
 }
 
-async function handlerPatch(req: NextApiRequest, res: NextApiResponse) {
+async function handlerPatch(req: NextApiRequest, res: NextApiResponse, token) {
   try {
     await bodySchema.validate(req.body);
   } catch (error) {
     res.status(400).send({ field: "body", message: error });
   }
 
-  const user = await userUpdate(req.body.email, req.body.updateData);
+  const user = await userUpdate(token.userId, req.body);
   res.status(200).send(user);
 }
 
