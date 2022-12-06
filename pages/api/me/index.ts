@@ -12,7 +12,7 @@ let bodySchema = yup
     name: yup.string(),
     email: yup.string(),
     address: yup.string(),
-    phone: yup.number(),
+    phone: yup.string(),
   })
   .noUnknown()
   .strict(true);
